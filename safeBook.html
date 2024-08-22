@@ -1,0 +1,465 @@
+<!-- <!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>טופס פתיחת לקוח</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        direction: rtl;
+        text-align: right;
+        background-color: #f9f9f9;
+      }
+      .container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        background-color: #fff;
+      }
+      h1,
+      p {
+        text-align: center;
+        color: #333;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: right;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      input[type="number"] {
+        width: 95%;
+        padding: 5px;
+        margin: 5px 0;
+        box-sizing: border-box;
+      }
+      .section-title {
+        background-color: #f2f2f2;
+        padding: 10px;
+        font-weight: bold;
+      }
+      .signature-section {
+        padding: 20px 0;
+      }
+      .submit-btn {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+        font-size: 16px;
+        margin: 10px 0;
+        display: block;
+        width: 100%;
+      }
+      .submit-btn:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <img
+          src="logo.png"
+          alt="Logo"
+          style="display: block; margin: 0 auto 20px; max-width: 100px"
+        />
+        <h1>טופס פתיחת לקוח</h1>
+        <p>לקוח יקר, אנו שמחים שהצטרפת למשפחת הלקוחות שלנו!</p>
+      </header>
+
+      <form id="customerForm">
+        <section>
+          <div class="section-title">
+            להלן הפרטים הדרושים לפתיחת כרטיס לקוח:
+          </div>
+          <table>
+            <tr>
+              <td><label for="businessName">שם עסק מלא:</label></td>
+              <td><label for="businessID">ח.פ / ע.מ:</label></td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="businessName"
+                  name="businessName"
+                  required
+                />
+              </td>
+              <td>
+                <input type="text" id="businessID" name="businessID" required />
+              </td>
+            </tr>
+            <tr>
+              <td><label for="businessAddress">כתובת בית העסק:</label></td>
+              <td><label for="date">תאריך:</label></td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="businessAddress"
+                  name="businessAddress"
+                  required
+                />
+              </td>
+              <td><input type="date" id="date" name="date" required /></td>
+            </tr>
+            <tr>
+              <td><label for="faxNumber">פקס בית העסק:</label></td>
+              <td><label for="businessPhone">טלפון בית העסק:</label></td>
+            </tr>
+            <tr>
+              <td><input type="tel" id="faxNumber" name="faxNumber" /></td>
+              <td>
+                <input
+                  type="tel"
+                  id="businessPhone"
+                  name="businessPhone"
+                  required
+                />
+              </td>
+            </tr>
+            <tr>
+              <td><label for="email">כתובת מייל לקבלת חשבוניות:</label></td>
+              <td><label for="contactName">שם איש קשר:</label></td>
+            </tr>
+            <tr>
+              <td><input type="email" id="email" name="email" required /></td>
+              <td>
+                <input
+                  type="text"
+                  id="contactName"
+                  name="contactName"
+                  required
+                />
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <label for="contactPhone">טלפון איש קשר:</label>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <input
+                  type="tel"
+                  id="contactPhone"
+                  name="contactPhone"
+                  required
+                />
+              </td>
+            </tr>
+          </table>
+        </section>
+
+        <section>
+          <div class="section-title">תנאי תשלום מוסכמים:</div>
+          <textarea
+            name="paymentTerms"
+            rows="4"
+            style="width: 100%"
+            required
+          ></textarea>
+        </section>
+
+        <section class="signature-section">
+          <div class="section-title">אישור קבלת חשבוניות דיגיטליות במייל:</div>
+          <p>
+            אנו מאשרים בזה לחברת סייף בוק בע"מ על קבלת חשבוניות דיגיטליות במייל
+            על החתום:
+          </p>
+          <p>
+            שם חברה: <input type="text" name="confirmCompanyName" required />
+          </p>
+          <p>שם המאשר: <input type="text" name="confirmName" required /></p>
+          <p>
+            תפקיד המאשר: <input type="text" name="confirmPosition" required />
+          </p>
+          <p>חתימה: <input type="text" name="confirmSignature" required /></p>
+        </section>
+
+        <button type="submit" class="submit-btn">שלח</button>
+      </form>
+    </div>
+
+    <script>
+      const scriptURL = "YOUR_GOOGLE_SHEET_SCRIPT_URL";
+      const form = document.forms["customerForm"];
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        fetch(scriptURL, { method: "POST", body: new FormData(form) })
+          .then((response) => alert("הטופס נשלח בהצלחה!"))
+          .catch((error) => console.error("שגיאה בשליחה:", error));
+      });
+    </script>
+  </body>
+</html>
+<!DOCTYPE html> -->
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>טופס פתיחת לקוח - Safe Book</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      header {
+        background-color: #ff7f50;
+        color: white;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        font-size: 72px;
+        font-weight: bold;
+      }
+      .contact-info {
+        text-align: left;
+        font-size: 14px;
+        line-height: 1.2;
+      }
+      .contact-info p {
+        margin: 0;
+      }
+      h1 {
+        text-align: center;
+        font-size: 24px;
+        margin: 20px 0 10px;
+      }
+      .intro {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        padding: 10px;
+        text-align: right;
+      }
+      th {
+        font-weight: normal;
+      }
+      input[type="text"] {
+        width: 100%;
+        border: 1px solid #ddd;
+        padding: 5px;
+        box-sizing: border-box;
+      }
+      .payment-terms,
+      .digital-invoice {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      .form-row {
+        margin-bottom: 10px;
+      }
+      .form-row label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      .signature-canvas {
+        border: 1px solid #ddd;
+        width: 100%;
+        height: 150px;
+        background-color: #fff;
+      }
+      .button-container {
+        margin-top: 20px;
+        text-align: center;
+      }
+      .button-container button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #ff7f50;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">S</div>
+      <div class="contact-info">
+        <p>סייף בוק בע"מ</p>
+        <p>ח.פ. - 515911246</p>
+        <p>המרכבה 18, חולון</p>
+        <p>safebookline@gmail.com</p>
+      </div>
+    </header>
+
+    <h1>טופס פתיחת לקוח</h1>
+    <p class="intro">לקוח יקר, אנו שמחים שהצטרפת למשפחת הלקוחות שלנו!</p>
+
+    <form id="customerForm">
+      <p>להלן הפרטים הדרושים לפתיחת כרטיס לקוח:</p>
+
+      <table>
+        <tr>
+          <th>תאריך:</th>
+          <th>שם עסק מלא:</th>
+          <th>ח.פ. / ע.מ:</th>
+        </tr>
+        <tr>
+          <td><input type="text" name="date" /></td>
+          <td><input type="text" name="businessName" /></td>
+          <td><input type="text" name="idNumber" /></td>
+        </tr>
+        <tr>
+          <th>כתובת בית העסק:</th>
+          <th>טלפון בית העסק:</th>
+          <th>פקס בית העסק:</th>
+        </tr>
+        <tr>
+          <td><input type="text" name="businessAddress" /></td>
+          <td><input type="text" name="businessPhone" /></td>
+          <td><input type="text" name="businessFax" /></td>
+        </tr>
+        <tr>
+          <th>כתובת מייל לקבלת חשבוניות:</th>
+          <th>שם איש קשר:</th>
+          <th>טלפון איש קשר:</th>
+        </tr>
+        <tr>
+          <td><input type="text" name="invoiceEmail" /></td>
+          <td><input type="text" name="contactName" /></td>
+          <td><input type="text" name="contactPhone" /></td>
+        </tr>
+      </table>
+
+      <div class="payment-terms">
+        <p>תנאי תשלום מוסכמים:</p>
+        <div class="form-row">
+          <label for="paymentTerms">תנאים:</label>
+          <input type="text" id="paymentTerms" name="paymentTerms" />
+        </div>
+      </div>
+
+      <div class="digital-invoice">
+        <h3>אישור קבלת חשבוניות דיגיטליות במייל:</h3>
+        <p>
+          אנו מאשרים בזאת לחברת סייף בוק בע"מ על קבלת חשבוניות דיגיטליות במייל
+          על החתום:
+        </p>
+        <div class="form-row">
+          <label for="companyName">שם חברה:</label>
+          <input type="text" id="companyName" name="companyName" />
+        </div>
+        <div class="form-row">
+          <label for="approverName">שם מאשר:</label>
+          <input type="text" id="approverName" name="approverName" />
+        </div>
+        <div class="form-row">
+          <label for="approverPosition">תפקיד מאשר:</label>
+          <input type="text" id="approverPosition" name="approverPosition" />
+        </div>
+      </div>
+
+      <div class="signature">
+        <label for="signatureCanvas">חתימה:</label>
+        <canvas id="signatureCanvas" class="signature-canvas"></canvas>
+        <button type="button" onclick="clearSignature()">נקה</button>
+      </div>
+
+      <div class="button-container">
+        <button type="submit">שלח</button>
+      </div>
+    </form>
+
+    <script>
+      const canvas = document.getElementById("signatureCanvas");
+      const context = canvas.getContext("2d");
+      let drawing = false;
+
+      // Set canvas size
+      canvas.width = 500;
+      canvas.height = 150;
+
+      function startDrawing(e) {
+        drawing = true;
+        context.beginPath(); // Start a new path
+        context.moveTo(e.offsetX, e.offsetY); // Move to the click position
+      }
+
+      function draw(e) {
+        if (!drawing) return;
+        context.lineTo(e.offsetX, e.offsetY); // Draw line to the current position
+        context.stroke(); // Render the line
+      }
+
+      function stopDrawing() {
+        if (!drawing) return;
+        drawing = false;
+        context.closePath(); // Close the path to end drawing
+      }
+
+      function clearSignature() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+      canvas.addEventListener("mousedown", startDrawing);
+      canvas.addEventListener("mousemove", draw);
+      canvas.addEventListener("mouseup", stopDrawing);
+      canvas.addEventListener("mouseout", stopDrawing);
+
+      document
+        .getElementById("customerForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const formData = new FormData(this);
+          const formObject = {};
+          formData.forEach((value, key) => (formObject[key] = value));
+
+          formObject.signature = canvas.toDataURL(); // Convert canvas to data URL
+
+          fetch(
+            "https://script.google.com/macros/s/AKfycbzatKfErGqGmNiReyVyyhNdqq6YMnWC2aT1-kW7z_L3-06BKmEOfq8cgt_6oyRxpXlM/exec",
+            {
+              method: "POST",
+              mode: "no-cors",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formObject),
+            }
+          )
+            .then((response) => response.text())
+            .then((result) => alert("Form submitted successfully!"))
+            .catch((error) => console.error("Error:", error));
+        });
+    </script>
+  </body>
+</html>
