@@ -10,14 +10,16 @@
         margin: 0 auto;
         padding: 0;
         box-sizing: border-box;
+        background-color: #f4f4f4; /* Light grey background for the whole page */
       }
       header {
-        background-color: #ff7f50;
+        background-color: #ff7f50; /* Coral color */
         color: white;
         padding: 20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
       .logo {
         font-size: 72px;
@@ -35,43 +37,58 @@
         text-align: center;
         font-size: 24px;
         margin: 20px 0 10px;
+        color: #333;
       }
       .intro {
         text-align: center;
         margin-bottom: 20px;
+        color: #555;
+      }
+      .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
       table {
         width: 100%;
         border-collapse: collapse;
+        margin-bottom: 20px;
       }
       th,
       td {
-        border: 1px solid black;
+        border: 1px solid #ddd;
         padding: 10px;
         text-align: right;
       }
       th {
+        background-color: #f9f9f9;
         font-weight: normal;
       }
-      input[type="text"] {
+      input[type="text"],
+      input[type="number"] {
         width: 100%;
         border: 1px solid #ddd;
-        padding: 5px;
+        padding: 10px;
+        border-radius: 4px;
         box-sizing: border-box;
+        font-size: 16px;
       }
       .payment-terms,
       .digital-invoice {
         margin-top: 20px;
-        padding: 10px;
+        padding: 20px;
         border: 1px solid #ddd;
         border-radius: 4px;
+        background-color: #f9f9f9;
       }
       .form-row {
-        margin-bottom: 10px;
+        margin-bottom: 15px;
       }
       .form-row label {
         display: block;
         margin-bottom: 5px;
+        font-weight: bold;
       }
       .signature-canvas {
         border: 1px solid #ddd;
@@ -90,15 +107,18 @@
         color: white;
         font-size: 16px;
         cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
       }
-      .container {
-        background-color: #e8e8e8;
+      .button-container button:hover {
+        background-color: #ff6f40;
       }
       .footer {
-        background-color: #e8e8e8;
+        background-color: #f4f4f4;
         padding: 10px;
         text-align: center;
         font-size: 14px;
+        color: #777;
       }
     </style>
   </head>
@@ -126,7 +146,7 @@
             <th>ח.פ. / ע.מ:</th>
           </tr>
           <tr>
-            <td><input type="text" name="date" /></td>
+            <td><input type="text" name="date" id="dateField" /></td>
             <td><input type="text" name="businessName" /></td>
             <td><input type="text" name="idNumber" /></td>
           </tr>
@@ -137,7 +157,7 @@
           </tr>
           <tr>
             <td><input type="text" name="businessAddress" /></td>
-            <td><input type="text" name="businessPhone" /></td>
+            <td><input type="number" name="businessPhone" /></td>
             <td><input type="text" name="businessFax" /></td>
           </tr>
           <tr>
@@ -148,7 +168,7 @@
           <tr>
             <td><input type="text" name="invoiceEmail" /></td>
             <td><input type="text" name="contactName" /></td>
-            <td><input type="text" name="contactPhone" /></td>
+            <td><input type="number" name="contactPhone" /></td>
           </tr>
         </table>
 
@@ -189,47 +209,25 @@
         <div class="button-container">
           <button type="submit">שלח</button>
         </div>
-        <div class="footer">
-          <p>תודה רבה, חברת סייף בוק בע"מ</p>
-        </div>
       </form>
     </div>
+    <div class="footer">
+      <p>תודה רבה, חברת סייף בוק בע"מ</p>
+    </div>
     <script>
+      function setCurrentDate() {
+        const dateField = document.getElementById("dateField");
+        const today = new Date();
+        const formattedDate = today.toISOString().split("T")[0]; // YYYY-MM-DD
+        dateField.value = formattedDate;
+      }
+
+      setCurrentDate();
+
       const canvas = document.getElementById("signatureCanvas");
       const context = canvas.getContext("2d");
       let drawing = false;
 
-      /* // Set canvas size
-      canvas.width = 500;
-      canvas.height = 150;
-
-      function startDrawing(e) {
-        drawing = true;
-        context.beginPath(); // Start a new path
-        context.moveTo(e.offsetX, e.offsetY); // Move to the click position
-      }
-
-      function draw(e) {
-        if (!drawing) return;
-        context.lineTo(e.offsetX, e.offsetY); // Draw line to the current position
-        context.stroke(); // Render the line
-      }
-
-      function stopDrawing() {
-        if (!drawing) return;
-        drawing = false;
-        context.closePath(); // Close the path to end drawing
-      }
-
-      function clearSignature() {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-      }
-
-      canvas.addEventListener("mousedown", startDrawing);
-      canvas.addEventListener("mousemove", draw);
-      canvas.addEventListener("mouseup", stopDrawing);
-      canvas.addEventListener("mouseout", stopDrawing); */
-      // התאמת גודל הקנבס למסך קטן
       function resizeCanvas() {
         const ratio = window.devicePixelRatio || 1;
         canvas.width = canvas.offsetWidth * ratio;
@@ -238,26 +236,34 @@
         context.lineWidth = 2;
       }
 
-      // קביעת גודל קנבס לפי גודל המסך
-      window.addEventListener("resize", resizeCanvas);
-      resizeCanvas(); // קריאה ראשונית להתאמת הגודל
+      // Set canvas size only once on load
+      resizeCanvas();
 
-      // תמיכה באירועי מגע
+      function preventDefaultTouch(event) {
+        event.preventDefault();
+      }
+
       function startDrawing(event) {
         drawing = true;
+        const rect = canvas.getBoundingClientRect();
+        const x =
+          (event.touches ? event.touches[0].clientX : event.clientX) -
+          rect.left;
+        const y =
+          (event.touches ? event.touches[0].clientY : event.clientY) - rect.top;
         context.beginPath();
-        context.moveTo(
-          event.offsetX || event.touches[0].clientX - canvas.offsetLeft,
-          event.offsetY || event.touches[0].clientY - canvas.offsetTop
-        );
+        context.moveTo(x, y);
       }
 
       function draw(event) {
         if (!drawing) return;
-        context.lineTo(
-          event.offsetX || event.touches[0].clientX - canvas.offsetLeft,
-          event.offsetY || event.touches[0].clientY - canvas.offsetTop
-        );
+        const rect = canvas.getBoundingClientRect();
+        const x =
+          (event.touches ? event.touches[0].clientX : event.clientX) -
+          rect.left;
+        const y =
+          (event.touches ? event.touches[0].clientY : event.clientY) - rect.top;
+        context.lineTo(x, y);
         context.stroke();
       }
 
@@ -270,16 +276,26 @@
         context.clearRect(0, 0, canvas.width, canvas.height);
       }
 
-      // אירועי עכבר
+      // Mouse Events
       canvas.addEventListener("mousedown", startDrawing);
       canvas.addEventListener("mousemove", draw);
       canvas.addEventListener("mouseup", stopDrawing);
       canvas.addEventListener("mouseout", stopDrawing);
 
-      // אירועי מגע
-      canvas.addEventListener("touchstart", startDrawing);
-      canvas.addEventListener("touchmove", draw);
+      // Touch Events
+      canvas.addEventListener("touchstart", startDrawing, { passive: false });
+      canvas.addEventListener("touchmove", draw, { passive: false });
       canvas.addEventListener("touchend", stopDrawing);
+      canvas.addEventListener("touchcancel", stopDrawing);
+
+      // Prevent scrolling when touching the canvas
+      canvas.addEventListener("touchstart", preventDefaultTouch, {
+        passive: false,
+      });
+      canvas.addEventListener("touchmove", preventDefaultTouch, {
+        passive: false,
+      });
+
       document
         .getElementById("customerForm")
         .addEventListener("submit", function (event) {
@@ -303,7 +319,13 @@
             }
           )
             .then((response) => response.text())
-            .then((result) => alert("Form submitted successfully!"))
+            .then((result) => {
+              alert("Form submitted successfully!");
+
+              // Clear all form inputs and the signature canvas
+              document.getElementById("customerForm").reset();
+              clearSignature();
+            })
             .catch((error) => console.error("Error:", error));
         });
     </script>
