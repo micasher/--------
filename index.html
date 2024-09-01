@@ -1,124 +1,230 @@
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>טופס פתיחת לקוח - Safe Book</title>
     <style>
+      :root {
+        --primary-color: #ff7f50;
+        --hover-color: #ff6f40;
+        --background-color: #f4f4f4;
+        --card-background-color: #ffffff;
+        --border-color: #ddd;
+        --text-color: #333;
+        --subtext-color: #666;
+        --footer-color: #777;
+        --font-family: "Arial", sans-serif;
+      }
+
       body {
-        font-family: Arial, sans-serif;
-        max-width: 800px;
+        font-family: var(--font-family);
+        max-width: 900px;
         margin: 0 auto;
         padding: 0;
         box-sizing: border-box;
-        background-color: #f4f4f4; /* Light grey background for the whole page */
+        background-color: var(--background-color);
       }
+
       header {
-        background-color: #ff7f50; /* Coral color */
+        background-color: var(--primary-color);
         color: white;
         padding: 20px;
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
         align-items: center;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
+
       .logo {
-        font-size: 72px;
+        font-size: 36px;
         font-weight: bold;
+        margin-bottom: 10px;
       }
+
       .contact-info {
-        text-align: left;
+        text-align: center;
         font-size: 14px;
-        line-height: 1.2;
+        line-height: 1.4;
       }
+
       .contact-info p {
         margin: 0;
       }
+
+      .contact-info a {
+        color: white;
+        text-decoration: none;
+      }
+
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
+
       h1 {
         text-align: center;
-        font-size: 24px;
-        margin: 20px 0 10px;
-        color: #333;
+        font-size: 28px;
+        margin: 20px 0;
+        color: var(--text-color);
       }
+
       .intro {
         text-align: center;
         margin-bottom: 20px;
-        color: #555;
+        color: var(--subtext-color);
+        font-size: 16px;
+        line-height: 1.5;
       }
+
       .container {
-        background-color: white;
+        background-color: var(--card-background-color);
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
       }
+
+      .form-section {
+        margin-bottom: 30px;
+      }
+
+      .form-section h2 {
+        font-size: 22px;
+        color: var(--text-color);
+        margin-bottom: 15px;
+      }
+
+      .form-section p {
+        margin-bottom: 15px;
+        color: var(--subtext-color);
+        font-size: 16px;
+      }
+
       table {
         width: 100%;
         border-collapse: collapse;
         margin-bottom: 20px;
       }
+
       th,
       td {
-        border: 1px solid #ddd;
-        padding: 10px;
+        border: 1px solid var(--border-color);
+        padding: 12px;
         text-align: right;
       }
+
       th {
         background-color: #f9f9f9;
         font-weight: normal;
       }
+
       input[type="text"],
-      input[type="number"] {
+      input[type="number"],
+      input[type="date"] {
         width: 100%;
-        border: 1px solid #ddd;
-        padding: 10px;
+        border: 1px solid var(--border-color);
+        padding: 12px;
         border-radius: 4px;
         box-sizing: border-box;
         font-size: 16px;
+        margin-bottom: 10px;
       }
+
+      input::placeholder {
+        color: var(--subtext-color);
+      }
+
       .payment-terms,
       .digital-invoice {
         margin-top: 20px;
         padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
         background-color: #f9f9f9;
       }
+
       .form-row {
         margin-bottom: 15px;
       }
+
       .form-row label {
         display: block;
         margin-bottom: 5px;
         font-weight: bold;
       }
+
       .signature-canvas {
-        border: 1px solid #ddd;
+        border: 1px solid var(--border-color);
         width: 100%;
         height: 150px;
         background-color: #fff;
       }
+
       .button-container {
         margin-top: 20px;
         text-align: center;
       }
+
       .button-container button {
-        padding: 10px 20px;
+        padding: 12px 24px;
         border: none;
-        background-color: #ff7f50;
+        background-color: var(--primary-color);
         color: white;
         font-size: 16px;
         cursor: pointer;
         border-radius: 4px;
         transition: background-color 0.3s ease;
       }
+
       .button-container button:hover {
-        background-color: #ff6f40;
+        background-color: var(--hover-color);
       }
+
+      .clear-button {
+        background-color: #ff6f40;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+      }
+
+      .clear-button:hover {
+        background-color: #ff7f50;
+      }
+
       .footer {
-        background-color: #f4f4f4;
+        background-color: var(--background-color);
         padding: 10px;
         text-align: center;
         font-size: 14px;
-        color: #777;
+        color: var(--footer-color);
+      }
+
+      @media (max-width: 600px) {
+        .logo {
+          font-size: 28px;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+
+        .button-container button {
+          font-size: 14px;
+          padding: 10px 20px;
+        }
+
+        .intro {
+          font-size: 14px;
+        }
+
+        .form-section h2 {
+          font-size: 20px;
+        }
       }
     </style>
   </head>
@@ -129,205 +235,307 @@
         <p>סייף בוק בע"מ</p>
         <p>ח.פ. - 515911246</p>
         <p>המרכבה 18, חולון</p>
-        <p>safebookline@gmail.com</p>
+        <p>
+          <a href="mailto:safebookline@gmail.com">safebookline@gmail.com</a>
+        </p>
       </div>
     </header>
+
     <div class="container">
       <h1>טופס פתיחת לקוח</h1>
-      <p class="intro">לקוח יקר, אנו שמחים שהצטרפת למשפחת הלקוחות שלנו!</p>
+      <p class="intro">
+        לקוח יקר, אנו שמחים שהצטרפת למשפחת הלקוחות שלנו! אנא מלא את הפרטים למטה
+        כדי להשלים את ההרשמה.
+      </p>
 
       <form id="customerForm">
-        <p>להלן הפרטים הדרושים לפתיחת כרטיס לקוח:</p>
+        <section class="form-section">
+          <h2>פרטי לקוח</h2>
+          <table>
+            <tr>
+              <th>תאריך:</th>
+              <th>שם עסק מלא:</th>
+              <th>ח.פ. / ע.מ:</th>
+            </tr>
+            <tr>
+              <td><input type="date" name="date" id="dateField" /></td>
+              <td>
+                <input
+                  type="text"
+                  name="businessName"
+                  placeholder="הזן שם עסק מלא"
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="idNumber"
+                  placeholder="הזן ח.פ. / ע.מ"
+                  required
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>כתובת בית העסק:</th>
+              <th>טלפון בית העסק:</th>
+              <th>פקס בית העסק:</th>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  name="businessAddress"
+                  placeholder="הזן כתובת"
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  name="businessPhone"
+                  placeholder="הזן טלפון"
+                  required
+                />
+              </td>
+              <td>
+                <input type="text" name="businessFax" placeholder="הזן פקס" />
+              </td>
+            </tr>
+            <tr>
+              <th>כתובת מייל לקבלת חשבוניות:</th>
+              <th>שם איש קשר:</th>
+              <th>טלפון איש קשר:</th>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  name="invoiceEmail"
+                  placeholder="הזן כתובת מייל"
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="contactName"
+                  placeholder="הזן שם איש קשר"
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  name="contactPhone"
+                  placeholder="הזן טלפון איש קשר"
+                  required
+                />
+              </td>
+            </tr>
+          </table>
+        </section>
 
-        <table>
-          <tr>
-            <th>תאריך:</th>
-            <th>שם עסק מלא:</th>
-            <th>ח.פ. / ע.מ:</th>
-          </tr>
-          <tr>
-            <td><input type="text" name="date" id="dateField" /></td>
-            <td><input type="text" name="businessName" /></td>
-            <td><input type="text" name="idNumber" /></td>
-          </tr>
-          <tr>
-            <th>כתובת בית העסק:</th>
-            <th>טלפון בית העסק:</th>
-            <th>פקס בית העסק:</th>
-          </tr>
-          <tr>
-            <td><input type="text" name="businessAddress" /></td>
-            <td><input type="number" name="businessPhone" /></td>
-            <td><input type="text" name="businessFax" /></td>
-          </tr>
-          <tr>
-            <th>כתובת מייל לקבלת חשבוניות:</th>
-            <th>שם איש קשר:</th>
-            <th>טלפון איש קשר:</th>
-          </tr>
-          <tr>
-            <td><input type="text" name="invoiceEmail" /></td>
-            <td><input type="text" name="contactName" /></td>
-            <td><input type="number" name="contactPhone" /></td>
-          </tr>
-        </table>
-
-        <div class="payment-terms">
-          <p>תנאי תשלום מוסכמים:</p>
+        <section class="payment-terms form-section">
+          <h2>תנאי תשלום מוסכמים</h2>
           <div class="form-row">
             <label for="paymentTerms">תנאים:</label>
-            <input type="text" id="paymentTerms" name="paymentTerms" />
+            <input
+              type="text"
+              id="paymentTerms"
+              name="paymentTerms"
+              placeholder="הזן תנאים"
+            />
           </div>
-        </div>
+        </section>
 
-        <div class="digital-invoice">
-          <h3>אישור קבלת חשבוניות דיגיטליות במייל:</h3>
+        <section class="digital-invoice form-section">
+          <h2>אישור קבלת חשבוניות דיגיטליות במייל</h2>
           <p>
             אנו מאשרים בזאת לחברת סייף בוק בע"מ על קבלת חשבוניות דיגיטליות במייל
             על החתום:
           </p>
           <div class="form-row">
             <label for="companyName">שם חברה:</label>
-            <input type="text" id="companyName" name="companyName" />
+            <input
+              type="text"
+              id="companyName"
+              name="companyName"
+              placeholder="הזן שם חברה"
+              required
+            />
           </div>
           <div class="form-row">
             <label for="approverName">שם מאשר:</label>
-            <input type="text" id="approverName" name="approverName" />
+            <input
+              type="text"
+              id="approverName"
+              name="approverName"
+              placeholder="הזן שם מאשר"
+              required
+            />
           </div>
           <div class="form-row">
             <label for="approverPosition">תפקיד מאשר:</label>
-            <input type="text" id="approverPosition" name="approverPosition" />
+            <input
+              type="text"
+              id="approverPosition"
+              name="approverPosition"
+              placeholder="הזן תפקיד מאשר"
+              required
+            />
           </div>
-        </div>
+        </section>
 
-        <div class="signature">
-          <label for="signatureCanvas">חתימה:</label>
-          <canvas id="signatureCanvas" class="signature-canvas"></canvas>
-          <button type="button" onclick="clearSignature()">נקה</button>
-        </div>
+        <section class="form-section">
+          <h2>חתימה</h2>
+          <div class="form-row">
+            <label for="signatureCanvas">חתימה:</label>
+            <canvas
+              id="signatureCanvas"
+              class="signature-canvas"
+              aria-label="Signature Canvas"
+              title="הניחו את העכבר על הקנבס כדי לחתום כאן"
+            ></canvas>
+            <button
+              class="clear-button"
+              type="button"
+              onclick="clearSignature()"
+            >
+              נקה
+            </button>
+          </div>
+        </section>
 
         <div class="button-container">
           <button type="submit">שלח</button>
         </div>
       </form>
     </div>
+
     <div class="footer">
       <p>תודה רבה, חברת סייף בוק בע"מ</p>
     </div>
+
     <script>
-      function setCurrentDate() {
+      document.addEventListener("DOMContentLoaded", function () {
         const dateField = document.getElementById("dateField");
-        const today = new Date();
-        const formattedDate = today.toISOString().split("T")[0]; // YYYY-MM-DD
-        dateField.value = formattedDate;
-      }
+        const canvas = document.getElementById("signatureCanvas");
+        const context = canvas.getContext("2d");
+        let drawing = false;
 
-      setCurrentDate();
+        function setCurrentDate() {
+          const today = new Date();
+          const formattedDate = today.toISOString().split("T")[0];
+          dateField.value = formattedDate;
+        }
 
-      const canvas = document.getElementById("signatureCanvas");
-      const context = canvas.getContext("2d");
-      let drawing = false;
+        function resizeCanvas() {
+          const ratio = window.devicePixelRatio || 1;
+          canvas.width = canvas.offsetWidth * ratio;
+          canvas.height = canvas.offsetHeight * ratio;
+          context.scale(ratio, ratio);
+          context.lineWidth = 2;
+        }
 
-      function resizeCanvas() {
-        const ratio = window.devicePixelRatio || 1;
-        canvas.width = canvas.offsetWidth * ratio;
-        canvas.height = canvas.offsetHeight * ratio;
-        context.scale(ratio, ratio);
-        context.lineWidth = 2;
-      }
+        function preventDefaultTouch(event) {
+          event.preventDefault();
+        }
 
-      // Set canvas size only once on load
-      resizeCanvas();
+        function startDrawing(event) {
+          drawing = true;
+          const rect = canvas.getBoundingClientRect();
+          const x =
+            (event.touches ? event.touches[0].clientX : event.clientX) -
+            rect.left;
+          const y =
+            (event.touches ? event.touches[0].clientY : event.clientY) -
+            rect.top;
+          context.beginPath();
+          context.moveTo(x, y);
+        }
 
-      function preventDefaultTouch(event) {
-        event.preventDefault();
-      }
+        function draw(event) {
+          if (!drawing) return;
+          const rect = canvas.getBoundingClientRect();
+          const x =
+            (event.touches ? event.touches[0].clientX : event.clientX) -
+            rect.left;
+          const y =
+            (event.touches ? event.touches[0].clientY : event.clientY) -
+            rect.top;
+          context.lineTo(x, y);
+          context.stroke();
+        }
 
-      function startDrawing(event) {
-        drawing = true;
-        const rect = canvas.getBoundingClientRect();
-        const x =
-          (event.touches ? event.touches[0].clientX : event.clientX) -
-          rect.left;
-        const y =
-          (event.touches ? event.touches[0].clientY : event.clientY) - rect.top;
-        context.beginPath();
-        context.moveTo(x, y);
-      }
+        function stopDrawing() {
+          drawing = false;
+          context.closePath();
+        }
 
-      function draw(event) {
-        if (!drawing) return;
-        const rect = canvas.getBoundingClientRect();
-        const x =
-          (event.touches ? event.touches[0].clientX : event.clientX) -
-          rect.left;
-        const y =
-          (event.touches ? event.touches[0].clientY : event.clientY) - rect.top;
-        context.lineTo(x, y);
-        context.stroke();
-      }
+        function clearSignature() {
+          context.clearRect(0, 0, canvas.width, canvas.height);
+        }
 
-      function stopDrawing() {
-        drawing = false;
-        context.closePath();
-      }
+        setCurrentDate();
+        resizeCanvas();
 
+        window.addEventListener("resize", resizeCanvas);
+
+        canvas.addEventListener("mousedown", startDrawing);
+        canvas.addEventListener("mousemove", draw);
+        canvas.addEventListener("mouseup", stopDrawing);
+        canvas.addEventListener("mouseout", stopDrawing);
+        canvas.addEventListener("touchstart", startDrawing, { passive: false });
+        canvas.addEventListener("touchmove", draw, { passive: false });
+        canvas.addEventListener("touchend", stopDrawing);
+        canvas.addEventListener("touchcancel", stopDrawing);
+        canvas.addEventListener("touchstart", preventDefaultTouch, {
+          passive: false,
+        });
+        canvas.addEventListener("touchmove", preventDefaultTouch, {
+          passive: false,
+        });
+
+        document
+          .getElementById("customerForm")
+          .addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const formObject = {};
+            formData.forEach((value, key) => (formObject[key] = value));
+
+            formObject.signature = canvas.toDataURL();
+
+            fetch(
+              "https://script.google.com/macros/s/AKfycbyYX2oPMNThZ0beI_5fuIkUg8tH0Kze9c_MF6cQOuIGKSkh3EsMScZsrrbb9i4quykn/exec",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formObject),
+              }
+            )
+              .then((response) => {
+                if (!response.ok)
+                  throw new Error("Network response was not ok.");
+                return response.text();
+              })
+              .then((result) => {
+                alert("הטופס נשלח בהצלחה!");
+                document.getElementById("customerForm").reset();
+                clearSignature();
+              })
+              .catch((error) => console.error("Error:", error));
+          });
+      });
       function clearSignature() {
+        const canvas = document.getElementById("signatureCanvas");
+        const context = canvas.getContext("2d");
         context.clearRect(0, 0, canvas.width, canvas.height);
       }
-
-      // Mouse Events
-      canvas.addEventListener("mousedown", startDrawing);
-      canvas.addEventListener("mousemove", draw);
-      canvas.addEventListener("mouseup", stopDrawing);
-      canvas.addEventListener("mouseout", stopDrawing);
-
-      // Touch Events
-      canvas.addEventListener("touchstart", startDrawing, { passive: false });
-      canvas.addEventListener("touchmove", draw, { passive: false });
-      canvas.addEventListener("touchend", stopDrawing);
-      canvas.addEventListener("touchcancel", stopDrawing);
-
-      // Prevent scrolling when touching the canvas
-      canvas.addEventListener("touchstart", preventDefaultTouch, {
-        passive: false,
-      });
-      canvas.addEventListener("touchmove", preventDefaultTouch, {
-        passive: false,
-      });
-
-      document
-        .getElementById("customerForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-
-          const formData = new FormData(this);
-          const formObject = {};
-          formData.forEach((value, key) => (formObject[key] = value));
-
-          formObject.signature = canvas.toDataURL(); // Convert canvas to data URL
-
-          fetch(
-            "https://script.google.com/macros/s/AKfycbyYX2oPMNThZ0beI_5fuIkUg8tH0Kze9c_MF6cQOuIGKSkh3EsMScZsrrbb9i4quykn/exec",
-            {
-              method: "POST",
-              mode: "no-cors",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(formObject),
-            }
-          )
-            .then((response) => response.text())
-            .then((result) => {
-              alert("Form submitted successfully!");
-
-              // Clear all form inputs and the signature canvas
-              document.getElementById("customerForm").reset();
-              clearSignature();
-            })
-            .catch((error) => console.error("Error:", error));
-        });
     </script>
   </body>
 </html>
